@@ -95,7 +95,7 @@ def shares_all():
         q.column_items[constants.c_full_name] = user[constants.c_first_name] + ' ' + user[constants.c_last_name]
         print q.column_items
         res.append(json.dumps(q.column_items))
-     return '['+','.join(res)+']'
+    return '['+','.join(res)+']'
 
 ## TRANSPORT ##
 
