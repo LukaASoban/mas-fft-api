@@ -92,7 +92,7 @@ def shares_all():
     for q in query:
         user = db.session.query(User).filter(q.column_items[constants.c_user_id] == User.id)[0]
         print "Full name", user.first_name+ ' '+user.last_name
-        q.column_items[constants.c_full_name] = user[constants.c_first_name] + ' ' + user[constants.c_last_name]
+        q.column_items[constants.c_full_name] = user.first_name+ ' '+user.last_name
         print q.column_items
         res.append(json.dumps(q.column_items))
     return '['+','.join(res)+']'
