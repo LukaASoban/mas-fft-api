@@ -91,10 +91,12 @@ def shares_all():
     res=[]
     for q in query:
         user = db.session.query(User).filter(q.column_items[constants.c_user_id] == User.id)[0]
-        print "Full name", user.first_name+ ' '+user.last_name
-        q.column_items[constants.c_full_name] = user.first_name+ ' '+user.last_name
-        print q.column_items
-        res.append(json.dumps(q.column_items))
+        d = {}
+        for item in q.column_items:
+             d[item] = q.column_items[item]
+        d[constants.c_full_name] = user.first_name+ ' '+user.last_name
+        print d
+        res.append(json.dumps(d))
     return '['+','.join(res)+']'
 
 ## TRANSPORT ##
