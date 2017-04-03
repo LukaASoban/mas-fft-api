@@ -1,7 +1,6 @@
 from uuid import uuid4
 import boto
 import os.path
-from flask import current_app as app
 from werkzeug.utils import secure_filename
 import constants as c
 

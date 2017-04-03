@@ -13,7 +13,6 @@ from flask_wtf.file import FileField
 def index():
     return "Food for thought API v1.0"
 
-
 # Upload images
 class UploadForm(Form):
     example = FileField('Example File')

@@ -3,7 +3,6 @@ import constants
 from sqlalchemy.dialects.postgresql import JSON
 import uuid
 
-
 def uuid_gen():
     return str(uuid.uuid4())
 
