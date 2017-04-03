@@ -1,21 +1,30 @@
 #!/usr/bin/python
-from flask import request, json
-from flask_cors import cross_origin
-
-from sqlalchemy import update, select, exists
-import threading
-
-import constants
 import os
-
-from app_init import app, db
+from app_init import app
 from model import *
+from tools import s3_upload
+
+from flask import render_template, flash, request, json
+from flask_wtf import Form
+from flask_wtf.file import FileField
 
 
 @app.route('/')
 def index():
     return "Food for thought API v1.0"
 
+
+# Upload images
+class UploadForm(Form):
+    example = FileField('Example File')
+
+@app.route('/upload_image', methods=['POST', 'GET'])
+def upload_page():
+    form = UploadForm()
+    if form.validate_on_submit():
+        output = s3_upload(form.example)
+        flash('{src} uploaded to S3 as {dst}'.format(src=form.example.data.filename, dst=output))
+    return render_template('example.html', form=form)
 
 @app.route('/register', methods=['POST'])
 def create_user_handler():

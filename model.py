@@ -1,9 +1,7 @@
 from app_init import db
 import constants
-from sqlalchemy.dialects.postgresql import JSON, ARRAY
-from sqlalchemy.types import BigInteger
+from sqlalchemy.dialects.postgresql import JSON
 import uuid
-from datetime import datetime
 
 
 def uuid_gen():

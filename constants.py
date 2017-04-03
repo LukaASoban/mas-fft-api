@@ -38,4 +38,10 @@ c_request_id = 'request_id'
 c_available_till = 'available_till'
 
 
+S3_KEY = 'AKIAIPGE2G7YBUDFLI3A'
+S3_SECRET = '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'
+S3_UPLOAD_DIRECTORY = 's3://cse8803-mas-images'
+S3_BUCKET = 'mas-images'
+
+
 
