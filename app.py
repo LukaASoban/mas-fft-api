@@ -24,7 +24,7 @@ def upload_page():
     if form.validate_on_submit():
         output = s3_upload(form.example)
         flash('{src} uploaded to S3 as {dst}'.format(src=form.example.data.filename, dst=output))
-    return render_template('example.html', form=form)
+    return 'Works'
 
 @app.route('/register', methods=['POST'])
 def create_user_handler():
