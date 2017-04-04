@@ -9,7 +9,8 @@ def uuid_gen():
 # Create our database model
 class User(db.Model):
     __tablename__ = "users"
-    user_id = db.Column(db.String(120), primary_key=True, default=uuid_gen )
+    user_id = db.Column(db.String(120), primary_key=True, default=uuid_gen)
+    created_time = db.Column(db.String(120))
     first_name = db.Column(db.String(120))
     last_name = db.Column(db.String(120))
     email_id = db.Column(db.String(120), unique=True)
@@ -20,6 +21,7 @@ class User(db.Model):
     provider = db.Column(db.String)
 
     def __init__(self, user_json):
+        self.created_time = user_json[constants.c_created_time]
         self.first_name = user_json[constants.c_first_name]
         self.last_name = user_json[constants.c_last_name]
         self.email_id = user_json[constants.c_email_id]
@@ -51,6 +53,7 @@ class User(db.Model):
 class Share(db.Model):
     __tablename__ = "shares"
     share_id = db.Column(db.String(120),primary_key=True, default=uuid_gen)
+    created_time = db.Column(db.String(120))
     user_id = db.Column(db.String(120))
     serve_size = db.Column(db.Integer)
     last_time = db.Column(db.String)
@@ -63,6 +66,7 @@ class Share(db.Model):
 
     def __init__(self, share_json):
         #self.share_id = share_json[constant.c_share_id]
+        self.created_time = share_json[constants.c_created_time]
         self.user_id = share_json[constants.c_user_id]
         self.serve_size  = share_json[constants.c_serve_size ]
         self.last_time = share_json[constants.c_last_till]
@@ -91,6 +95,7 @@ class Share(db.Model):
 class transportRequests(db.Model):
     __tablename__ = "transportreq"
     transport_id = db.Column(db.String(120), primary_key=True, default=uuid_gen)
+    created_time = db.Column(db.String(120))
     user_id = db.Column(db.String(120)) #transporter
     name = db.Column(db.String(120))
     pickup_location = db.Column(JSON)
@@ -106,6 +111,7 @@ class transportRequests(db.Model):
 
     def __init__(self, transport_json):
         #self.transport_id = transport_json[constants.c_id]
+        self.created_time = transport_json[constants.c_created_time]
         self.user_id = transport_json[constants.c_user_id]
         self.name = transport_json[constants.c_name]
         self.pickup_location = transport_json[constants.c_pickup_location]
@@ -137,6 +143,7 @@ class transportRequests(db.Model):
 class Request(db.Model):
     __tablename__ = "request"
     request_id = db.Column(db.String(120), primary_key=True, default=uuid_gen)
+    created_time = db.Column(db.String(120))
     user_id = db.Column(db.String(120))
     name = db.Column(db.String(120))
     pickup_location = db.Column(JSON)
@@ -148,6 +155,7 @@ class Request(db.Model):
 
     def __init__(self, request_json):
         #self.request_id = request_json[constants.c_request_id]
+        self.created_time = request_json[constants.c_created_time]
         self.user_id = request_json[constants.c_user_id]
         self.name = request_json[constants.c_name]
         self.pickup_location = request_json[constants.c_pickup_location]
