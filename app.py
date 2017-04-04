@@ -4,8 +4,8 @@ from app_init import app
 from model import *
 from tools import s3_upload
 
-from flask import render_template, flash, request, json
-from flask_wtf import Form
+from flask import flash, request, json
+from flask_wtf import FlaskForm
 from flask_wtf.file import FileField
 
 
@@ -14,7 +14,7 @@ def index():
     return "Food for thought API v1.0"
 
 # Upload images
-class UploadForm(Form):
+class UploadForm(FlaskForm):
     example = FileField('Example File')
 
 @app.route('/upload_image', methods=['POST', 'GET'])
