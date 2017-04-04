@@ -42,10 +42,6 @@ c_transport_type = 'transport_type'
 c_transport_status = 'transport_status'
 
 
-S3_KEY = 'AKIAIPGE2G7YBUDFLI3A'
-S3_SECRET = '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'
-S3_UPLOAD_DIRECTORY = 's3://cse8803-mas-images'
-S3_BUCKET = 'mas-images'
-
-
-
+c_S3_KEY = 'AKIAIPGE2G7YBUDFLI3A'
+c_S3_SECRET = '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'
+c_S3_BUCKET = 'cse8803-mas-images'
