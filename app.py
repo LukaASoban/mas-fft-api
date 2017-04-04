@@ -14,9 +14,6 @@ import boto
 def index():
     return "Food for thought API v1.0"
 
-def get_full_image_path(image_id):
-    return "/".join([c.c_S3_AWS_URL, c.c_S3_BUCKET, image_id])
-
 @app.route('/upload_image', methods=['POST', 'GET'])
 def upload_page():
     image = request.files['image']
