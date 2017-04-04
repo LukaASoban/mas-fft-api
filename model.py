@@ -166,7 +166,7 @@ class Request(db.Model):
         self.pickup_contact = request_json[constants.c_pickup_contact]
         self.available_till = request_json[constants.c_available_till]
         self.serve_size = request_json[constants.c_serve_size]
-        self.matched = request_json[constant.c_matched]
+        self.matched = request_json[constants.c_matched]
 
 
     @property
