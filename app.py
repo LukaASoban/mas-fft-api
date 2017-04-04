@@ -160,7 +160,7 @@ def transport_acceptRequest():
     db.session.commit()
 
 #api endpoint for transport request completion
-@app.route('transport_completeRequest/<id>')
+@app.route('/transport_completeRequest/<id>')
 def transport_completeRequest(id):
     query = db.session.query(transportRequests).filter(transportRequests.transport_id == id)
     query.transport_status = 'complete'
