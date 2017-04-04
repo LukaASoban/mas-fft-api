@@ -1,17 +1,15 @@
 #!/usr/bin/python
 import os
 from app_init import app
+
+from flask import request, json
+import constants as c
 from model import *
-
-from flask import flash, request, json
-from flask_wtf import FlaskForm
-from flask_wtf.file import FileField
-
 
 from werkzeug.utils import secure_filename
 from uuid import uuid4
 import boto
-import constants as c
+
 
 
 @app.route('/')
@@ -23,6 +21,10 @@ def index():
 #     example = FileField('Example File')
 
 @app.route('/upload_image', methods=['POST', 'GET'])
+
+def get_full_image_path(image_id):
+    return "/".join([c.c_S3_AWS_URL, c.c_S3_BUCKET, image_id])
+
 def upload_page():
     image = request.files['image']
     acl = 'public-read'
@@ -32,10 +34,10 @@ def upload_page():
 
     destination_filename = uuid4().hex + source_extension
 
-    conn = boto.connect_s3(c.S3_KEY, c.S3_SECRET)
-    b = conn.get_bucket(c.S3_BUCKET)
+    conn = boto.connect_s3(c.c_S3_KEY, c.c_S3_SECRET)
+    b = conn.get_bucket(c.c_S3_BUCKET)
 
-    sml = b.new_key("/".join([c.S3_UPLOAD_DIRECTORY, destination_filename]))
+    sml = b.new_key(destination_filename)
     sml.set_contents_from_string(image.read())
     sml.set_acl(acl)
 
