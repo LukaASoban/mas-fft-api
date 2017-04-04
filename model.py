@@ -61,6 +61,8 @@ class Share(db.Model):
     food_type = db.Column(db.String)
     image_ids = db.Column(db.String)
     matched = db.Column(db.String)
+    share_location = db.Column(JSON)
+    sharer_contact = db.Column(JSON)
     # status = db.Column(db.String)
     # created_time = db.Column(db.String)
 
@@ -74,6 +76,8 @@ class Share(db.Model):
         self.food_type = share_json[constants.c_food_type]
         self.image_ids = share_json[constants.c_image_ids]
         self.matched = share_json[constants.c_matched]
+        self.share_location = share_json[constants.c_share_location]
+        self.share_contact = share_json[constants.c_contact]
 
         # self.status = c.c_status_open
         # self.created_time = datetime.utcnow().isoformat()[:-7] + 'Z'
