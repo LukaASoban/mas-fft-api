@@ -2,11 +2,16 @@
 import os
 from app_init import app
 from model import *
-from tools import s3_upload
 
 from flask import flash, request, json
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField
+
+
+from werkzeug.utils import secure_filename
+from uuid import uuid4
+import boto
+import constants as c
 
 
 @app.route('/')
@@ -20,10 +25,21 @@ def index():
 @app.route('/upload_image', methods=['POST', 'GET'])
 def upload_page():
     image = request.files['image']
-    print image.filename
-        # output = s3_upload(form.example)
-        # flash('{src} uploaded to S3 as {dst}'.format(src=form.example.data.filename, dst=output))
-    return 'Works'
+    acl = 'public-read'
+
+    source_filename = secure_filename(image.filename)
+    source_extension = os.path.splitext(source_filename)[1]
+
+    destination_filename = uuid4().hex + source_extension
+
+    conn = boto.connect_s3(c.S3_KEY, c.S3_SECRET)
+    b = conn.get_bucket(c.S3_BUCKET)
+
+    sml = b.new_key("/".join([c.S3_UPLOAD_DIRECTORY, destination_filename]))
+    sml.set_contents_from_string(image.read())
+    sml.set_acl(acl)
+
+    return destination_filename
 
 @app.route('/register', methods=['POST'])
 def create_user_handler():
