@@ -200,10 +200,10 @@ def request_postRequest():
     db.session.commit()
     return ''
 
-@app.route('/request_activeRequest',methods=['POST'])
-def request_postRequest():
-    request.json = json.loads(request.data)
-    request_object = Request()
+# @app.route('/request_activeRequest',methods=['POST'])
+# def request_postRequest():
+#     request.json = json.loads(request.data)
+#     request_object = Request()
 
 
 
