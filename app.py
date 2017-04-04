@@ -14,15 +14,15 @@ def index():
     return "Food for thought API v1.0"
 
 # Upload images
-class UploadForm(FlaskForm):
-    example = FileField('Example File')
+# class UploadForm(FlaskForm):
+#     example = FileField('Example File')
 
 @app.route('/upload_image', methods=['POST', 'GET'])
 def upload_page():
-    form = UploadForm()
-    if form.validate_on_submit():
-        output = s3_upload(form.example)
-        flash('{src} uploaded to S3 as {dst}'.format(src=form.example.data.filename, dst=output))
+    image = request.files['image']
+    print image.filename
+        # output = s3_upload(form.example)
+        # flash('{src} uploaded to S3 as {dst}'.format(src=form.example.data.filename, dst=output))
     return 'Works'
 
 @app.route('/register', methods=['POST'])
