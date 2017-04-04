@@ -156,7 +156,7 @@ def transport_acceptRequest():
 
     query = db.session.query(transportRequests).filter(transportRequests.transport_id == temp['transport_id'])
     query.transport_status = 'assigned'
-    query.user_id = temp[user_id]
+    query.user_id = temp['user_id']
     db.session.commit()
 
 #api endpoint for transport request completion
