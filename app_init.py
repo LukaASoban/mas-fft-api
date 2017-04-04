@@ -10,7 +10,7 @@ app.config['CORS_HEADER'] = 'Content-Type'
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 app.config['WTF_CSRF_ENABLED'] = False
 db = SQLAlchemy(app)
-
+db.create_all()
 with app.app_context():
     db.create_all()
 
