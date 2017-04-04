@@ -36,6 +36,8 @@ c_status_ongoing = "ongoing"
 
 c_request_id = 'request_id'
 c_available_till = 'available_till'
+c_transport_type = 'transport_type'
+c_transport_status = 'transport_status'
 
 
 c_S3_KEY = 'AKIAIPGE2G7YBUDFLI3A'

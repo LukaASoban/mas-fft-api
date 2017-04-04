@@ -127,6 +127,7 @@ def shares_all():
 
 ## TRANSPORT ##
 
+#api endpoints for posting a transport request - for INTERNAL USE ONLY
 @app.route('/transport_postRequest', methods=['POST'])
 def transport_postRequest():
     transport_json = json.loads(request.data)
@@ -136,14 +137,52 @@ def transport_postRequest():
     return "Success"
 
 
+#api endpoint for matched requests, update transport table , MATCHED REQUESTS, CREATE TRANSPORT REQUEST
+@app.route('/transport_createRequest',methods=['POST'])
+def transport_createRequest():
+    transport_json = json.loads(request.data)
+    transport = transportRequests(transport_json)
+    db.session.add(transport)
+    db.session.commit()
+    return "Success"
+
+
+#api endpoint for viewing all transport requests
 @app.route('/transport_getRequests', methods=['GET'])
 def transport_getRequests():
-    query = db.session.query(transportRequests)
+    query = db.session.query(transportRequests).filter(transportRequests.transport_type == 'delivery')
     res = []
     for q in query:
+        #if q.transport_status == 'active':
         res.append(json.dumps(q.column_items))
     return '[' + ','.join(res) + ']'
 
+
+#api endpoint for transporter accepting transport request
+@app.route('/transport_acceptRequest',methods=['POST']) #required transport id and transporter(user_id)
+def transport_acceptRequest():
+    
+    temp = json.loads(request.data)
+
+    query = db.session.query(transportRequests).filter(transportRequests.transport_id == temp['transport_id'])
+    query.transport_status = 'assigned'
+    query.user_id = temp[user_id]
+    db.session.commit()
+
+#api endpoint for transport request completion
+@app.route('transport_completeRequest/<id>')
+def transport_completeRequest(id):
+    query = db.session.query(transportRequests).filter(transportRequests.transport_id == id)
+    query.transport_status = 'complete'
+    db.session.commit()
+
+    #Assign brownie points to sharer and transporter
+    #CODE GOES BELOW
+
+
+
+
+## REQUEST FOOD ##
 @app.route('/requestsPost',methods=['POST'])
 def requestPost():
     request_json = json.loads(request.data)
@@ -170,6 +209,11 @@ def request_postRequest():
     db.session.add(request_object)
     db.session.commit()
     return ''
+
+@app.route('/request_activeRequest',methods=['POST'])
+def request_postRequest():
+    request.json = json.loads(request.data)
+    request_object = Request()
 
 
 

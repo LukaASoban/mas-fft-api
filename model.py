@@ -9,7 +9,7 @@ def uuid_gen():
 # Create our database model
 class User(db.Model):
     __tablename__ = "users"
-    id = db.Column(db.String(120), primary_key=True, default=uuid_gen )
+    user_id = db.Column(db.String(120), primary_key=True, default=uuid_gen )
     first_name = db.Column(db.String(120))
     last_name = db.Column(db.String(120))
     email_id = db.Column(db.String(120), unique=True)
@@ -50,23 +50,26 @@ class User(db.Model):
 
 class Share(db.Model):
     __tablename__ = "shares"
-    id = db.Column(db.String(120),primary_key=True, default=uuid_gen)
+    share_id = db.Column(db.String(120),primary_key=True, default=uuid_gen)
     user_id = db.Column(db.String(120))
     serve_size = db.Column(db.Integer)
     last_time = db.Column(db.String)
     available_time = db.Column(db.String)
     food_type = db.Column(db.String)
     image_ids = db.Column(db.String)
+    matched = db.Column(db.String)
     # status = db.Column(db.String)
     # created_time = db.Column(db.String)
 
     def __init__(self, share_json):
+        #self.share_id = share_json[constant.c_share_id]
         self.user_id = share_json[constants.c_user_id]
         self.serve_size  = share_json[constants.c_serve_size ]
         self.last_time = share_json[constants.c_last_till]
         self.available_time = share_json[constants.c_available_time]
         self.food_type = share_json[constants.c_food_type]
         self.image_ids = share_json[constants.c_image_ids]
+        self.matched = share_json[constants.c_matched]
 
         # self.status = c.c_status_open
         # self.created_time = datetime.utcnow().isoformat()[:-7] + 'Z'
@@ -87,7 +90,8 @@ class Share(db.Model):
 
 class transportRequests(db.Model):
     __tablename__ = "transportreq"
-    id = db.Column(db.String(120), primary_key=True, default=uuid_gen)
+    transport_id = db.Column(db.String(120), primary_key=True, default=uuid_gen)
+    user_id = db.Column(db.String(120)) #transporter
     name = db.Column(db.String(120))
     pickup_location = db.Column(JSON)
     drop_location = db.Column(JSON)
@@ -96,9 +100,13 @@ class transportRequests(db.Model):
     pickup_time = db.Column(db.String)
     delivery_time = db.Column(db.String)
     serve_size = db.Column(db.Integer)
+    transport_status = db.Column(db.String)
+    request_id = db.Column(db.String(120))
+    share_id = db.Column(db.String(120))
 
     def __init__(self, transport_json):
-        self.id = transport_json[constants.c_id]
+        #self.transport_id = transport_json[constants.c_id]
+        self.user_id = transport_json[constants.c_user_id]
         self.name = transport_json[constants.c_name]
         self.pickup_location = transport_json[constants.c_pickup_location]
         self.drop_location = transport_json[constants.c_drop_location]
@@ -107,6 +115,10 @@ class transportRequests(db.Model):
         self.pickup_time = transport_json[constants.c_pickup_time]
         self.delivery_time = transport_json[constants.c_delivery_time]
         self.serve_size = transport_json[constants.c_serve_size]
+        self.transport_type = transport_json[constants.c_transport_type]
+        self.transport_status = transport_json[constants.c_transport_status]
+        self.request_id = transport_json[constants.c_request_id]
+        self.share_id = transport_json[constant.c_share_id]
 
     @property
     def columns(self):
@@ -125,20 +137,24 @@ class transportRequests(db.Model):
 class Request(db.Model):
     __tablename__ = "request"
     request_id = db.Column(db.String(120), primary_key=True, default=uuid_gen)
+    user_id = db.Column(db.String(120))
     name = db.Column(db.String(120))
     pickup_location = db.Column(JSON)
     pickup_contact = db.Column(JSON)
     #contact: 'name','phone_number'
     available_till = db.Column(db.String) #time
     serve_size = db.Column(db.Integer)
+    matched = db.Column(db.String)
 
     def __init__(self, request_json):
-        self.request_id = request_json[constants.c_request_id]
+        #self.request_id = request_json[constants.c_request_id]
+        self.user_id = request_json[constants.c_user_id]
         self.name = request_json[constants.c_name]
         self.pickup_location = request_json[constants.c_pickup_location]
         self.pickup_contact = request_json[constants.c_pickup_contact]
         self.available_till = request_json[constants.c_available_till]
         self.serve_size = request_json[constants.c_serve_size]
+        self.matched = request_json[constant.c_matched]
 
 
     @property
