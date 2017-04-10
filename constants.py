@@ -16,6 +16,7 @@ c_last_till = 'last_till'
 c_available_time = 'available_till'
 c_food_type = 'food_type'
 c_image_ids = 'image_ids'
+c_share_status = 'share_status'
 
 c_lat = 'lat'
 c_long = 'long'

@@ -60,9 +60,10 @@ class Share(db.Model):
     available_time = db.Column(db.String)
     food_type = db.Column(db.String)
     image_ids = db.Column(db.String)
-    matched = db.Column(db.String)
+    share_status = db.Column(db.String) #matched
     share_location = db.Column(JSON)
-    sharer_contact = db.Column(JSON)
+    #contact: 'name','phone_number','email'
+    sharer_contact = db.Column(JSON) 
     # status = db.Column(db.String)
     # created_time = db.Column(db.String)
 
@@ -75,7 +76,7 @@ class Share(db.Model):
         self.available_time = share_json[constants.c_available_time]
         self.food_type = share_json[constants.c_food_type]
         self.image_ids = share_json[constants.c_image_ids]
-        self.matched = share_json[constants.c_matched]
+        self.share_status = share_json[constants.c_share_status]
         self.share_location = share_json[constants.c_share_location]
         self.share_contact = share_json[constants.c_contact]
 
@@ -100,34 +101,40 @@ class transportRequests(db.Model):
     __tablename__ = "transportreq"
     transport_id = db.Column(db.String(120), primary_key=True, default=uuid_gen)
     created_time = db.Column(db.String(120))
-    user_id = db.Column(db.String(120)) #transporter
-    name = db.Column(db.String(120))
-    pickup_location = db.Column(JSON)
-    drop_location = db.Column(JSON)
-    pickup_contact = db.Column(JSON)
-    drop_contact = db.Column(JSON)
-    pickup_time = db.Column(db.String)
-    delivery_time = db.Column(db.String)
-    serve_size = db.Column(db.Integer)
+    transport_user_id = db.Column(db.String(120)) #transporter user_id
     transport_status = db.Column(db.String)
-    request_id = db.Column(db.String(120))
+    
+    pickup_location = db.Column(JSON) # share_location
+    drop_location = db.Column(JSON) # request_location
+
+    pickup_time = db.Column(db.String) # share_available_time
+    delivery_time = db.Column(db.String) # request_available_time
+    serve_size = db.Column(db.Integer) #minimum of sharer and requester
+    
+    request_user_id=db.Column(db.String)
     share_id = db.Column(db.String(120))
+    #request_id = db.Column(db.String(120))
+    #pickup_contact = db.Column(JSON)
+    #drop_contact = db.Column(JSON)
+    #transport_name = db.Column(db.String(120)) #name
+    
 
     def __init__(self, transport_json):
         #self.transport_id = transport_json[constants.c_id]
         self.created_time = transport_json[constants.c_created_time]
-        self.user_id = transport_json[constants.c_user_id]
-        self.name = transport_json[constants.c_name]
+        self.transport_user_id = transport_json[constants.c_transport_user_id]
+        #self.transport_name = transport_json[constants.c_transport_name]
         self.pickup_location = transport_json[constants.c_pickup_location]
         self.drop_location = transport_json[constants.c_drop_location]
-        self.pickup_contact = transport_json[constants.c_pickup_contact]
-        self.drop_contact = transport_json[constants.c_drop_contact]
+        #self.pickup_contact = transport_json[constants.c_pickup_contact]
+        #self.drop_contact = transport_json[constants.c_drop_contact]
         self.pickup_time = transport_json[constants.c_pickup_time]
         self.delivery_time = transport_json[constants.c_delivery_time]
         self.serve_size = transport_json[constants.c_serve_size]
         self.transport_type = transport_json[constants.c_transport_type]
         self.transport_status = transport_json[constants.c_transport_status]
-        self.request_id = transport_json[constants.c_request_id]
+        #self.request_id = transport_json[constants.c_request_id]
+        self.request_user_id = transport_json[constants.c_request_user_id]
         self.share_id = transport_json[constant.c_share_id]
 
     @property
@@ -152,7 +159,7 @@ class Request(db.Model):
     name = db.Column(db.String(120))
     pickup_location = db.Column(JSON)
     pickup_contact = db.Column(JSON)
-    #contact: 'name','phone_number'
+    #contact: 'name','phone_number','email'
     available_till = db.Column(db.String) #time
     serve_size = db.Column(db.Integer)
     matched = db.Column(db.String)
