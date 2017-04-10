@@ -1,4 +1,4 @@
-from app import db
+from app_init import db
 import constants
 from sqlalchemy.dialects.postgresql import JSON
 import uuid
