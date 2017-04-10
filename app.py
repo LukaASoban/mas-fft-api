@@ -144,7 +144,8 @@ def transport_getRequests():
     res = []
     for q in query:
         #if q.transport_status == 'active':
-        res.append(json.dumps(q.column_items))
+        if q.transport_status =='active':
+            res.append(json.dumps(q.column_items))
     return '[' + ','.join(res) + ']'
 
 
@@ -156,7 +157,7 @@ def transport_acceptRequest():
 
     query = db.session.query(transportRequests).filter(transportRequests.transport_id == temp['transport_id'])
     query.transport_status = 'assigned'
-    query.user_id = temp['user_id']
+    query.transport_user_id = temp['transport_user_id']
     db.session.commit()
 
 #api endpoint for transport request completion
