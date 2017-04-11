@@ -89,7 +89,7 @@ class Share(db.Model):
         self.image_ids = share_json[constants.c_image_ids]
         self.share_status = share_json[constants.c_share_status]
         self.share_location = share_json[constants.c_share_location]
-        self.share_contact = share_json[constants.c_contact]
+        self.sharer_contact = share_json[constants.c_sharer_contact]
 
         # self.status = c.c_status_open
         # self.created_time = datetime.utcnow().isoformat()[:-7] + 'Z'

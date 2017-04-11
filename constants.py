@@ -17,6 +17,8 @@ c_available_time = 'available_till'
 c_food_type = 'food_type'
 c_image_ids = 'image_ids'
 c_share_status = 'share_status'
+c_sharer_contact = 'share_contact'
+c_share_location = 'share_location'
 
 c_lat = 'lat'
 c_long = 'long'
@@ -33,6 +35,7 @@ c_pickup_time = 'pickup_time'
 c_delivery_time = 'delivery_time'
 c_serve_size = 'serve_size'
 c_matched = 'matched'
+
 
 c_status_open = "open"
 c_status_closed = "closed"

@@ -83,7 +83,10 @@ def share():
     share = Share(share_json)
     db.session.add(share)
     db.session.commit()
-    return ''
+
+    return json.dumps(share.to_json())
+
+    #return ''
 
 # Get all active shares for a user
 @app.route('/shares_user/<userid>')
