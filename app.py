@@ -90,6 +90,8 @@ def share():
     response = urllib2.urlopen(url)
     temp = response.read()
     data = json.loads(temp)
+    
+    print data['results'][0]
     address = data["results"][0]["formatted_address"]
 
     share_json["share_location"]["address"] = address.decode('utf-8')
