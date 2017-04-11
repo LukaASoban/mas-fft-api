@@ -113,7 +113,7 @@ def shares_all():
     query = db.session.query(Share)
     res=[]
     for q in query:
-        user = db.session.query(User).filter(q.column_items[constants.c_user_id] == User.id)[0]
+        user = db.session.query(User).filter(q.column_items[constants.c_user_id] == User.user_id)[0]
         d = {}
         for item in q.column_items:
              d[item] = q.column_items[item]
