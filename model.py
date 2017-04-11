@@ -1,6 +1,7 @@
 #from app_init import db
 import constants
 from sqlalchemy.dialects.postgresql import JSON
+from flask_sqlalchemy import SQLAlchemy
 import uuid
 db = SQLAlchemy(app)
 def uuid_gen():
