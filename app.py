@@ -1,5 +1,6 @@
 #!/usr/bin/python
 import os
+#JUST TO COMMIT - SIGN UP, SIGN IN, SHARE WORKS
 #from app_init import app
 from model import app
 
