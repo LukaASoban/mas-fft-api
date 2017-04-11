@@ -10,6 +10,7 @@ from model import *
 from werkzeug.utils import secure_filename
 from uuid import uuid4
 import boto
+import os
 
 @app.route('/')
 def index():
@@ -25,7 +26,7 @@ def upload_page():
 
     destination_filename = uuid4().hex + source_extension
 
-    conn = boto.connect_s3(c.c_S3_KEY, c.c_S3_SECRET)
+    conn = boto.connect_s3(os.environ['S3_KEY'], os.environ['S3_SECRET'])
     b = conn.get_bucket(c.c_S3_BUCKET)
 
     sml = b.new_key(destination_filename)

@@ -43,7 +43,4 @@ c_available_till = 'available_till'
 c_transport_type = 'transport_type'
 c_transport_status = 'transport_status'
 
-
-c_S3_KEY = 'AKIAIPGE2G7YBUDFLI3A'
-c_S3_SECRET = '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'
 c_S3_BUCKET = 'cse8803-mas-images'
