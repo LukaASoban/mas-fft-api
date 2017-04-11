@@ -84,7 +84,7 @@ class Share(db.Model):
         self.user_id = share_json[constants.c_user_id]
         self.serve_size  = share_json[constants.c_serve_size ]
         self.last_time = share_json[constants.c_last_till]
-        self.available_time = share_json[constants.c_available_time]
+        self.available_time = share_json[constants.c_available_till]
         self.food_type = share_json[constants.c_food_type]
         self.image_ids = share_json[constants.c_image_ids]
         self.share_status = share_json[constants.c_share_status]
