@@ -131,8 +131,8 @@ def shares_all():
         d = {}
         for item in q.column_items:
              d[item] = q.column_items[item]
-        d[constants.c_full_name] = user.first_name+ ' '+user.last_name
-        print d
+        # d[constants.c_full_name] = user.first_name+ ' '+user.last_name
+        # print d
         res.append(json.dumps(d))
     return '['+','.join(res)+']'
 
