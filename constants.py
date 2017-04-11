@@ -35,6 +35,7 @@ c_pickup_time = 'pickup_time'
 c_delivery_time = 'delivery_time'
 c_serve_size = 'serve_size'
 c_matched = 'matched'
+c_transport_user_id = 'transport_user_id'
 
 
 c_status_open = "open"
