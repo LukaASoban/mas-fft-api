@@ -3,6 +3,7 @@ import os
 #JUST TO COMMIT - SIGN UP, SIGN IN, SHARE WORKS
 #from app_init import app
 from model import app
+import urllib2
 
 from flask import request, json
 import constants as c
@@ -83,7 +84,17 @@ def user(userid):
 @app.route('/share', methods=['POST'])
 def share():
     share_json = json.loads(request.data)
+    
+    
+    url = "http://maps.googleapis.com/maps/api/geocode/json?latlng=" + str(share_json["location"]["lat"]) +',' + str(share_json["location"]["lng"]) + "&sensor=true"
+    response = urllib2.urlopen(url)
+    temp = response.read()
+    data = json.loads(temp)
+    address = data["results"][0]["formatted_address"]
+
+    share_json["location"]["address"] = address.decode('utf-8')
     share = Share(share_json)
+
     db.session.add(share)
     db.session.commit()
 
