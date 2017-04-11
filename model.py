@@ -26,7 +26,7 @@ class User(db.Model):
     last_name = db.Column(db.String(120))
     email_id = db.Column(db.String(120), unique=True)
     profile_pic_url = db.Column(db.String)
-    phone_number = db.Column(db.String)
+    phone_number = db.Column(db.Numeric)
     password = db.Column(db.String)
     location = db.Column(JSON)
     provider = db.Column(db.String)
