@@ -142,6 +142,11 @@ def transport_createRequest():
     transport_json = json.loads(request.data)
     transport = transportRequests(transport_json)
     db.session.add(transport)
+    
+
+    if transport_json.transport_type=='pickup':
+        query2 = db.session.query(Share).filter(Share.share_id == temp['share_id'])
+        query2.share_status = 'matched'
     db.session.commit()
     return "Success"
 
