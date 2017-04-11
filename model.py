@@ -76,7 +76,7 @@ class Share(db.Model):
     #contact: 'name','phone_number','email'
     sharer_contact = db.Column(JSON) 
     # status = db.Column(db.String)
-    # created_time = db.Column(db.String)
+    created_time = db.Column(db.String)
 
     def __init__(self, share_json):
         #self.share_id = share_json[constant.c_share_id]
