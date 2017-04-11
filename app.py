@@ -1,6 +1,6 @@
 #!/usr/bin/python
 import os
-from app_init import app,db
+from app_init import app
 
 from flask import request, json
 import constants as c
