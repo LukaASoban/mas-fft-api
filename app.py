@@ -29,7 +29,7 @@ def upload_page():
     print len(request.form)
 
     data = request.form
-    image = Image.open(BytesIO(base64.b64decode(data['image'])))
+    image = Image.open(BytesIO(base64.b64decode(re.sub('^data:image/.+;base64,', '', data['image']))))
 
     # image = Image.open(cStringIO.StringIO(image_data))
     acl = 'public-read'
