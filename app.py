@@ -55,7 +55,7 @@ def create_user_handler():
 def login():
     login_json = json.loads(request.data)
     email = login_json[constants.c_email_id]
-    password = login_json[constants.c_password]
+    password = login_json[constants.c_password] 
     for user in db.session.query(User).filter(User.email_id == email):
         user_json = user.to_json()
         if password == user_json[constants.c_password]:
@@ -161,6 +161,10 @@ def transport_acceptRequest():
     query = db.session.query(transportRequests).filter(transportRequests.transport_id == temp['transport_id'])
     query.transport_status = 'assigned'
     query.transport_user_id = temp['transport_user_id']
+
+    query2 = db.session.query(Share).filter(Share.share_id == temp['share_id'])
+    query2.share_status = 'matched'
+
     db.session.commit()
 
 #api endpoint for transport request completion
@@ -168,6 +172,10 @@ def transport_acceptRequest():
 def transport_completeRequest(id):
     query = db.session.query(transportRequests).filter(transportRequests.transport_id == id)
     query.transport_status = 'complete'
+
+    query2 = db.session.query(Share).filter(Share.share_id == query.share_id)
+    query2.share_status = 'complete'
+
     db.session.commit()
 
     #Assign brownie points to sharer and transporter
