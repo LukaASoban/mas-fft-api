@@ -21,9 +21,10 @@ def upload_page():
     image = request.files['image']
     acl = 'public-read'
 
+
     source_filename = secure_filename(image.filename)
     source_extension = os.path.splitext(source_filename)[1]
-
+    print (source_filename)
     destination_filename = uuid4().hex + source_extension
 
     conn = boto.connect_s3(os.environ['S3_KEY'], os.environ['S3_SECRET'])
