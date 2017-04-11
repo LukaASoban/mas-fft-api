@@ -24,6 +24,7 @@ def index():
 @app.route('/upload_image', methods=['POST', 'GET'])
 def upload_page():
     image_data = re.sub('^data:image/.+;base64,', '', request.form['image']).decode('base64')
+    print len(request.form)
     image = Image.open(cStringIO.StringIO(image_data))
     acl = 'public-read'
 
