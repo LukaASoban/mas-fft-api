@@ -3,7 +3,7 @@ import constants
 from sqlalchemy.dialects.postgresql import JSON
 from flask_sqlalchemy import SQLAlchemy
 import uuid
-db = SQLAlchemy(app)
+#db = SQLAlchemy(app)
 def uuid_gen():
     return str(uuid.uuid4())
 
@@ -191,5 +191,14 @@ class Request(db.Model):
     def to_json(self):
         return self.column_items
 
-
+app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADER'] = 'Content-Type'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://fft_db:fftslam2017@fft-db2.cmridtwsayjd.us-east-1.rds.amazonaws.com:5432/postgres'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+app.config['WTF_CSRF_ENABLED'] = False
+db = SQLAlchemy(app)
+#db.create_all()    
+with app.app_context():
+    db.create_all()
 
