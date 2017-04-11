@@ -4,6 +4,7 @@ import os
 #from app_init import app
 from model import app
 import urllib2
+import base64
 
 from flask import request, json
 import constants as c
