@@ -12,6 +12,9 @@ from werkzeug.utils import secure_filename
 from uuid import uuid4
 import boto
 import os
+import re
+from PIL import Image
+import cStringIO
 
 @app.route('/')
 def index():
@@ -19,23 +22,22 @@ def index():
 
 @app.route('/upload_image', methods=['POST', 'GET'])
 def upload_page():
-    image = request.files['image']
+    image_data = re.sub('^data:image/.+;base64,', '', request.form['image']).decode('base64')
+    image = Image.open(cStringIO.StringIO(image_data))
     acl = 'public-read'
 
-
-    source_filename = secure_filename(image.filename)
-    source_extension = os.path.splitext(source_filename)[1]
-    print (source_filename)
-    destination_filename = uuid4().hex + source_extension
-
-    conn = boto.connect_s3(os.environ['S3_KEY'], os.environ['S3_SECRET'])
+    # conn = boto.connect_s3(os.environ['S3_KEY'], os.environ['S3_SECRET'])
+    conn = boto.connect_s3('AKIAIFNCHPT6U54KRLSQ', 'RpGIch0ZUp/vrxiOrpMxFBzg5m7NK4o7X2d4a2U2')
     b = conn.get_bucket(c.c_S3_BUCKET)
-
-    sml = b.new_key(destination_filename)
-    sml.set_contents_from_string(image.read())
+    filename = uuid4().hex+'.jpg';
+    sml = b.new_key(filename)
+    out_im2 = cStringIO.StringIO()
+    image.save(out_im2, 'JPEG')
+    sml.set_contents_from_string(out_im2.getvalue())
     sml.set_acl(acl)
+    os.remove(out_im2)
+    return filename
 
-    return destination_filename
    
 @app.route('/register', methods=['POST'])
 def create_user_handler():
