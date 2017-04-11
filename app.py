@@ -26,8 +26,7 @@ def upload_page():
     image = Image.open(cStringIO.StringIO(image_data))
     acl = 'public-read'
 
-    # conn = boto.connect_s3(os.environ['S3_KEY'], os.environ['S3_SECRET'])
-    conn = boto.connect_s3('AKIAIFNCHPT6U54KRLSQ', 'RpGIch0ZUp/vrxiOrpMxFBzg5m7NK4o7X2d4a2U2')
+    conn = boto.connect_s3(os.environ['S3_KEY'], os.environ['S3_SECRET'])
     b = conn.get_bucket(c.c_S3_BUCKET)
     filename = uuid4().hex+'.jpg';
     sml = b.new_key(filename)
