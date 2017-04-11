@@ -16,7 +16,3 @@ Flask-Cors==3.0.2
 flask-wtf
 boto
 Pillow==4.1.0
-reverse_geocode
-scipy
-numpy
-reverse_geocoder
