@@ -36,7 +36,7 @@ def upload_page():
     sml.set_contents_from_string(out_im2.getvalue())
     sml.set_acl(acl)
     os.remove(out_im2)
-    
+
     return filename
 
    
