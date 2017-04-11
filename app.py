@@ -16,6 +16,7 @@ import os
 import re
 from PIL import Image
 import cStringIO
+from io import BytesIO
 
 @app.route('/')
 def index():
@@ -25,7 +26,11 @@ def index():
 def upload_page():
     image_data = re.sub('^data:image/.+;base64,', '', request.form['image']).decode('base64')
     print len(request.form)
-    image = Image.open(cStringIO.StringIO(image_data))
+
+    data = request.form
+    image = Image.open(BytesIO(base64.b64decode(data['image'])))
+
+    # image = Image.open(cStringIO.StringIO(image_data))
     acl = 'public-read'
 
     conn = boto.connect_s3(os.environ['S3_KEY'], os.environ['S3_SECRET'])
