@@ -92,7 +92,7 @@ def share():
     data = json.loads(temp)
     
     # print data['results'][0]
-    if data:
+    if data["results"]:
 
         address = data["results"][0]["formatted_address"]
 
