@@ -113,6 +113,7 @@ class transportRequests(db.Model):
     transport_id = db.Column(db.String(120), primary_key=True, default=uuid_gen)
     created_time = db.Column(db.String(120))
     transport_user_id = db.Column(db.String(120)) #transporter user_id
+    transport_type = db.Column(db.String)
     transport_status = db.Column(db.String)
     
     pickup_location = db.Column(JSON) # share_location
