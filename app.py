@@ -91,11 +91,16 @@ def share():
     temp = response.read()
     data = json.loads(temp)
     
-    print data['results'][0]
-    address = data["results"][0]["formatted_address"]
+    # print data['results'][0]
+    if data:
 
-    share_json["share_location"]["address"] = address.decode('utf-8')
-    share = Share(share_json)
+        address = data["results"][0]["formatted_address"]
+
+        share_json["share_location"]["address"] = address.decode('utf-8')
+        share = Share(share_json)
+    else:
+        share_json["share_location"]["address"] = "NOT FOUND"
+        share = Share(share_json)
 
     db.session.add(share)
     db.session.commit()
