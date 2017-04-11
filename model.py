@@ -146,7 +146,7 @@ class transportRequests(db.Model):
         self.transport_status = transport_json[constants.c_transport_status]
         #self.request_id = transport_json[constants.c_request_id]
         self.request_user_id = transport_json[constants.c_request_user_id]
-        self.share_id = transport_json[constant.c_share_id]
+        self.share_id = transport_json[constants.c_share_id]
 
     @property
     def columns(self):
