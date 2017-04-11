@@ -3,7 +3,10 @@ from flask import Flask
 from flask_cors import CORS, cross_origin
 from flask_sqlalchemy import SQLAlchemy
 #from model import db
-from model import *
+from model import User
+from model import Share
+from model import transportRequests
+from model import Request
 
 app = Flask(__name__)
 cors = CORS(app)
