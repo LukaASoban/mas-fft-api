@@ -26,7 +26,7 @@ def index():
 @app.route('/upload_image', methods=['POST', 'GET'])
 def upload_page():
     image_data = re.sub('^data:image/.+;base64,', '', request.form['image']).decode('base64')
-    print len(request.form)
+    print image_data
 
     data = request.form
     image = Image.open(BytesIO(base64.b64decode(re.sub('^data:image/.+;base64,', '', data['image']))))
