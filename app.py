@@ -29,10 +29,10 @@ def upload_page():
 
     filename = uuid4().hex + '.jpg';
 
-    image = Image.open(filename,'w+')
-    image.write(image_data)
+    # image = Image.open(filename,'w+')
+    # image.write(image_data)
 
-    # image = Image.open(cStringIO.StringIO(image_data))
+    image = Image.open(cStringIO.StringIO(image_data))
     acl = 'public-read'
 
     conn = boto.connect_s3(os.environ['S3_KEY'], os.environ['S3_SECRET'])
