@@ -26,10 +26,10 @@ def index():
 @app.route('/upload_image', methods=['POST', 'GET'])
 def upload_page():
     image_data = re.sub('^data:image/.+;base64,', '', request.form['image']).decode('base64')
-    print image_data
+    image_data.seek(0)
 
     data = request.form
-    image = Image.open(BytesIO(base64.b64decode(re.sub('^data:image/.+;base64,', '', data['image']))))
+    image = Image.open(BytesIO(image_data))
 
     # image = Image.open(cStringIO.StringIO(image_data))
     acl = 'public-read'
