@@ -322,10 +322,10 @@ def getTransportDetails(id):
     share_user_id = query1.user_id
     query2 =  db.session.query(User).filter(User.user_id == share_user_id).first().column_items
     query3 = db.session.query(User).filter(User.user_id == res["request_user_id"]).first().column_items
-    res["share_user"] = query2["first_name"]+" "+query2["last_name"]
-    res["share_contact"] = query2["phone_number"]
-    res["request_user"] = query3["first_name"] + " " + query3["last_name"]
-    res["request_contact"] = query3["phone_number"]
+    res["share_user_name"] = query2["first_name"]+" "+query2["last_name"]
+    res["share_user_contact"] = query2["phone_number"]
+    res["request_user_name"] = query3["first_name"] + " " + query3["last_name"]
+    res["request_user_contact"] = query3["phone_number"]
     return json.dumps(res)
 
 
