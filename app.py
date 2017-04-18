@@ -181,9 +181,9 @@ def transport_createRequest():
     db.session.add(transport)
 
 
-    if transport_json["transport_type"]=='pickup':
-        query2 = db.session.query(Share).filter(Share.share_id == transport_json['share_id'])
-        query2.share_status = 'matched'
+    # if transport_json["transport_type"]=='pickup':
+    query2 = db.session.query(Share).filter(Share.share_id == transport_json['share_id'])
+    query2.share_status = 'matched'
     db.session.commit()
     return json.dumps(transport.to_json())
 
@@ -213,8 +213,8 @@ def transport_acceptRequest():
     query.transport_status = 'assigned'
     query.transport_user_id = temp['transport_user_id']
 
-    query2 = db.session.query(Share).filter(Share.share_id == temp['share_id'])
-    query2.share_status = 'matched'
+    # query2 = db.session.query(Share).filter(Share.share_id == temp['share_id'])
+    # query2.share_status = 'matched'
 
     db.session.commit()
 
