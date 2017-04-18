@@ -242,7 +242,7 @@ def transport_acceptRequest():
     tempDecode = query3[0].token
     payload['tokens'][0] = tempDecode.encode('ascii','ignore')
     print payload['tokens']
-    response = requests.request("POST", url, data=payload, headers=headers)
+    response = requests.request("POST", url, data=payload)#, headers=headers)
 
 
     query3 = db.session.query(Share).filter(Share.share_id ==temp['share_id'] )
