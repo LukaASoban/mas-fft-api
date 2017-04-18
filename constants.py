@@ -8,6 +8,7 @@ c_password = 'password'
 c_phone_number = 'phone_number'
 c_provider = 'provider'
 c_location = 'home_location'
+c_token = 'token'
 
 c_share_id = 'share_id'
 c_user_id = 'user_id'

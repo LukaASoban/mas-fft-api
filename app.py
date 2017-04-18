@@ -46,7 +46,7 @@ def upload_page():
 
     return filename
 
-   
+
 @app.route('/register', methods=['POST'])
 def create_user_handler():
     user_json = json.loads(request.data)
@@ -66,7 +66,7 @@ def create_user_handler():
 def login():
     login_json = json.loads(request.data)
     email = login_json[constants.c_email_id]
-    password = login_json[constants.c_password] 
+    password = login_json[constants.c_password]
     for user in db.session.query(User).filter(User.email_id == email):
         user_json = user.to_json()
         if password == user_json[constants.c_password]:
@@ -91,24 +91,26 @@ def user(userid):
 @app.route('/share', methods=['POST'])
 def share():
     share_json = json.loads(request.data)
-    
-    
-    url = "http://maps.googleapis.com/maps/api/geocode/json?latlng=" + str(share_json["share_location"]["lat"]) +',' + str(share_json["share_location"]["lng"]) + "&sensor=true"
-    response = urllib2.urlopen(url)
-    temp = response.read()
-    data = json.loads(temp)
-    
-    # print data['results'][0]
-    if data["results"]:
 
-        address = data["results"][0]["formatted_address"]
 
-        share_json["share_location"]["address"] = address.decode('utf-8')
-        share = Share(share_json)
-    else:
-        share_json["share_location"]["address"] = "NOT FOUND"
-        share = Share(share_json)
+    # url = "http://maps.googleapis.com/maps/api/geocode/json?latlng=" + str(share_json["share_location"]["lat"]) +',' + str(share_json["share_location"]["lng"]) + "&sensor=true"
+    # response = urllib2.urlopen(url)
+    # temp = response.read()
+    # data = json.loads(temp)
 
+    # # print data['results'][0]
+    # if data["results"]:
+
+    #     address = data["results"][0]["formatted_address"]
+
+    #     share_json["share_location"]["address"] = address.decode('utf-8')
+    #     share = Share(share_json)
+    # else:
+    #     share_json["share_location"]["address"] = "NOT FOUND"
+    #     share = Share(share_json)
+
+    #next line is needed only if address resolution at front-end
+    share = Share(share_json)
     db.session.add(share)
     db.session.commit()
 
@@ -133,6 +135,16 @@ def shares_id(id):
     for q in query:
         res.append(json.dumps(q.column_items))
     return '['+','.join(res)+']'
+
+@app.route('/share_cancel/<id>')
+def share_cancel(id):
+    query = db.session.query(Share).filter(Share.id == id)
+    query.share_status = 'canceled'
+
+    query2 = db.session.query(transportRequests).filter(transportRequests.share_id == id)
+    query2.transport_status = 'share_canceled'
+
+    return query2.request_user_id
 
 # Get all active shares
 @app.route('/shares_all')
@@ -167,7 +179,7 @@ def transport_createRequest():
     transport_json = json.loads(request.data)
     transport = transportRequests(transport_json)
     db.session.add(transport)
-    
+
 
     if transport_json["transport_type"]=='pickup':
         query2 = db.session.query(Share).filter(Share.share_id == transport_json['share_id'])
@@ -184,14 +196,17 @@ def transport_getRequests():
     for q in query:
         #if q.transport_status == 'active':
         if q.transport_status =='active':
+            # queryTemp = db.session.query()
             res.append(json.dumps(q.column_items))
+
     return '[' + ','.join(res) + ']'
+
 
 
 #api endpoint for transporter accepting transport request
 @app.route('/transport_acceptRequest',methods=['POST']) #required transport id and transporter(user_id)
 def transport_acceptRequest():
-    
+
     temp = json.loads(request.data)
 
     query = db.session.query(transportRequests).filter(transportRequests.transport_id == temp['transport_id'])

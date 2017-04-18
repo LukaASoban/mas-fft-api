@@ -30,6 +30,7 @@ class User(db.Model):
     password = db.Column(db.String)
     location = db.Column(JSON)
     provider = db.Column(db.String)
+    token = db.Column(db.String)
 
     def __init__(self, user_json):
         self.created_time = user_json[constants.c_created_time]
@@ -37,6 +38,7 @@ class User(db.Model):
         self.last_name = user_json[constants.c_last_name]
         self.email_id = user_json[constants.c_email_id]
         self.provider = user_json[constants.c_provider]
+        self.token = user_json[constants.c_token]
         if constants.c_profile_pic_url in user_json:
             self.profile_pic_url = user_json[constants.c_profile_pic_url]
         if constants.c_phone_number in user_json:
