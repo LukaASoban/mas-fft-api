@@ -226,7 +226,7 @@ def transport_acceptRequest():
     "profile": "mas2017",
     "notification": {
         "title": "Test Test",
-        "message": "Hello..This is special message for luka"
+        "message": "Your request has been approved!"
     }
     }
     
@@ -245,7 +245,14 @@ def transport_acceptRequest():
     print payload['tokens']
     response = requests.request("POST", url, data=json.dumps(payload), headers=headers)
 
-
+    payload = {
+    "tokens": "c1WRKuB-_UE:APA91bGnoKqHsjrYsRlxv7mVbA574uhIx_ZVd-PrvaxRzaNmyKMxiR8952ToihbKDCvc4WJT0NT8F0xGoGD7kBclHt4MXM-j3L35HmveNAB8tiidGP7HebWzlz6jCnoP81RU1QM1pbvK",
+    "profile": "mas2017",
+    "notification": {
+        "title": "Test Test",
+        "message": "Rider will be there shortly to pick up food!"
+    }
+    }
     query3 = db.session.query(Share).filter(Share.share_id ==temp['share_id'] )
     query4 = db.session.query(User).filter(User.user_id ==query3[0].user_id )
     tempDecode = query4[0].token
