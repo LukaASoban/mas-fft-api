@@ -213,7 +213,7 @@ def transport_acceptRequest():
     query = db.session.query(transportRequests).filter(transportRequests.transport_id == temp['transport_id'])
     print "HELLOSAKLNFLAKFNKLADFNLKFN"
     print type(query)
-    print len(query)
+    # print len(query)
     query[0].transport_status = 'assigned'
     query[0].transport_user_id = temp['transport_user_id']
 
