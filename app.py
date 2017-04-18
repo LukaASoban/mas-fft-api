@@ -26,23 +26,23 @@ def index():
 @app.route('/upload_image', methods=['POST', 'GET'])
 def upload_page():
     image_data = re.sub('^data:image/.+;base64,', '', request.form['image']).decode('base64')
-    print len(request.form)
 
-    data = request.form
-    image = Image.open(BytesIO(base64.b64decode(re.sub('^data:image/.+;base64,', '', data['image']))))
+    filename = uuid4().hex + '.jpg';
 
-    # image = Image.open(cStringIO.StringIO(image_data))
+    # image = Image.open(filename,'w+')
+    # image.write(image_data)
+
+    image = Image.open(cStringIO.StringIO(image_data))
     acl = 'public-read'
 
     conn = boto.connect_s3(os.environ['S3_KEY'], os.environ['S3_SECRET'])
     b = conn.get_bucket(c.c_S3_BUCKET)
-    filename = uuid4().hex+'.jpg';
+
     sml = b.new_key(filename)
     out_im2 = cStringIO.StringIO()
     image.save(out_im2, 'JPEG')
     sml.set_contents_from_string(out_im2.getvalue())
     sml.set_acl(acl)
-    os.remove(out_im2)
 
     return filename
 
