@@ -252,6 +252,8 @@ def transport_acceptRequest():
 
     db.session.commit()
 
+    return ''
+
 
 #api endpoint for transport request completion
 @app.route('/transport_completeRequest/<id>')
