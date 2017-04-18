@@ -222,7 +222,7 @@ def transport_acceptRequest():
 
 
     payload = {
-    "tokens": ["c1WRKuB-_UE:APA91bGnoKqHsjrYsRlxv7mVbA574uhIx_ZVd-PrvaxRzaNmyKMxiR8952ToihbKDCvc4WJT0NT8F0xGoGD7kBclHt4MXM-j3L35HmveNAB8tiidGP7HebWzlz6jCnoP81RU1QM1pbvK"],
+    "tokens": "c1WRKuB-_UE:APA91bGnoKqHsjrYsRlxv7mVbA574uhIx_ZVd-PrvaxRzaNmyKMxiR8952ToihbKDCvc4WJT0NT8F0xGoGD7kBclHt4MXM-j3L35HmveNAB8tiidGP7HebWzlz6jCnoP81RU1QM1pbvK",
     "profile": "mas2017",
     "notification": {
         "title": "Test Test",
@@ -241,7 +241,7 @@ def transport_acceptRequest():
 
     query3 = db.session.query(User).filter(User.user_id ==temp['request_user_id'] )
     tempDecode = query3[0].token
-    payload['tokens'][0] = tempDecode.encode('ascii','ignore')
+    payload['tokens'] = tempDecode.encode('ascii','ignore')
     print payload['tokens']
     response = requests.request("POST", url, data=payload, headers=headers)
 
@@ -249,7 +249,7 @@ def transport_acceptRequest():
     query3 = db.session.query(Share).filter(Share.share_id ==temp['share_id'] )
     query4 = db.session.query(User).filter(User.user_id ==query3[0].user_id )
     tempDecode = query4[0].token
-    payload['tokens'][0] = tempDecode.encode('ascii','ignore')
+    payload['tokens'] = tempDecode.encode('ascii','ignore')
     print payload['tokens']
     response = requests.request("POST", url, data=payload, headers=headers)
     print "RESPONSE",
