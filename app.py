@@ -239,14 +239,16 @@ def transport_acceptRequest():
     
 
     query3 = db.session.query(User).filter(User.user_id ==temp['request_user_id'] )
-    payload['tokens'][0] = query3[0].token
+    tempDecode = query3[0].token
+    payload['tokens'][0] = tempDecode.decode('utf-8')
     print payload['tokens']
     response = requests.request("POST", url, data=payload, headers=headers)
 
 
     query3 = db.session.query(Share).filter(Share.share_id ==temp['share_id'] )
     query4 = db.session.query(User).filter(User.user_id ==query3[0].user_id )
-    payload['tokens'][0] = query4[0].token
+    tempDecode = query4[0].token
+    payload['tokens'][0] = tempDecode.decode('utf-8')
     print payload['tokens']
     response = requests.request("POST", url, data=payload, headers=headers)
     print "RESPONSE",
