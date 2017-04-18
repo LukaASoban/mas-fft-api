@@ -18,6 +18,7 @@ import re
 from PIL import Image
 import cStringIO
 from io import BytesIO
+import requests
 
 @app.route('/')
 def index():
@@ -213,10 +214,41 @@ def transport_acceptRequest():
     query.transport_status = 'assigned'
     query.transport_user_id = temp['transport_user_id']
 
+    url = "https://api.ionic.io/push/notifications"
+
+
+    payload = {
+    "tokens": ["c1WRKuB-_UE:APA91bGnoKqHsjrYsRlxv7mVbA574uhIx_ZVd-PrvaxRzaNmyKMxiR8952ToihbKDCvc4WJT0NT8F0xGoGD7kBclHt4MXM-j3L35HmveNAB8tiidGP7HebWzlz6jCnoP81RU1QM1pbvK"],
+    "profile": "mas2017",
+    "notification": {
+        "title": "Test Test",
+        "message": "Hello..This is special message for luka"
+    }
+    }
+    
+
+    headers = {
+    'content-type': "application/json",
+    'authorization': "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIyYWI3NTNhNi1mYmYxLTQ4ZDYtOWEzZC1lZGIzMGI4NGQ2ZTMifQ.nRO6XwHOod2mGKHHtO-H13qHdrJQLWxxSurE17fLofI",
+    'cache-control': "no-cache",
+    'postman-token': "7e8e9e73-9ff6-69e5-ff68-4c0b94e26c12"
+    }
+    
+
+    query3 = db.session.query(User).filter(User.user_id ==temp['request_user_id'] )
+    payload['tokens'] = query3.token
+    response = requests.request("POST", url, data=payload, headers=headers)
+
+
+    query3 = db.session.query(Share).filter(Share.share_id ==temp['share_id'] )
+    query4 = db.session.query(User).filter(User.user_id ==query3.user_id )
+    payload['tokens'] = query4.token
+    response = requests.request("POST", url, data=payload, headers=headers)
     # query2 = db.session.query(Share).filter(Share.share_id == temp['share_id'])
     # query2.share_status = 'matched'
 
     db.session.commit()
+
 
 #api endpoint for transport request completion
 @app.route('/transport_completeRequest/<id>')
