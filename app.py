@@ -225,7 +225,7 @@ def transport_acceptRequest():
     "tokens": "c1WRKuB-_UE:APA91bGnoKqHsjrYsRlxv7mVbA574uhIx_ZVd-PrvaxRzaNmyKMxiR8952ToihbKDCvc4WJT0NT8F0xGoGD7kBclHt4MXM-j3L35HmveNAB8tiidGP7HebWzlz6jCnoP81RU1QM1pbvK",
     "profile": "mas2017",
     "notification": {
-        "title": "Test Test",
+        "title": "Request Alert",
         "message": "Your request has been approved!"
     }
     }
@@ -249,7 +249,7 @@ def transport_acceptRequest():
     "tokens": "c1WRKuB-_UE:APA91bGnoKqHsjrYsRlxv7mVbA574uhIx_ZVd-PrvaxRzaNmyKMxiR8952ToihbKDCvc4WJT0NT8F0xGoGD7kBclHt4MXM-j3L35HmveNAB8tiidGP7HebWzlz6jCnoP81RU1QM1pbvK",
     "profile": "mas2017",
     "notification": {
-        "title": "Test Test",
+        "title": "Share Alert",
         "message": "Rider will be there shortly to pick up food!"
     }
     }
