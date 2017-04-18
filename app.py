@@ -211,8 +211,11 @@ def transport_acceptRequest():
     temp = json.loads(request.data)
 
     query = db.session.query(transportRequests).filter(transportRequests.transport_id == temp['transport_id'])
-    query.transport_status = 'assigned'
-    query.transport_user_id = temp['transport_user_id']
+    print "HELLOSAKLNFLAKFNKLADFNLKFN"
+    print type(query)
+    print len(query)
+    query[0].transport_status = 'assigned'
+    query[0].transport_user_id = temp['transport_user_id']
 
     url = "https://api.ionic.io/push/notifications"
 
@@ -236,13 +239,13 @@ def transport_acceptRequest():
     
 
     query3 = db.session.query(User).filter(User.user_id ==temp['request_user_id'] )
-    payload['tokens'] = query3.token
+    payload['tokens'][0] = query3[0].token
     response = requests.request("POST", url, data=payload, headers=headers)
 
 
     query3 = db.session.query(Share).filter(Share.share_id ==temp['share_id'] )
-    query4 = db.session.query(User).filter(User.user_id ==query3.user_id )
-    payload['tokens'] = query4.token
+    query4 = db.session.query(User).filter(User.user_id ==query3[0].user_id )
+    payload['tokens'][0] = query4[0].token
     response = requests.request("POST", url, data=payload, headers=headers)
     # query2 = db.session.query(Share).filter(Share.share_id == temp['share_id'])
     # query2.share_status = 'matched'
