@@ -239,7 +239,7 @@ def transport_acceptRequest():
     }
     
 
-    query3 = db.session.query(User).filter(User.user_id ==temp['request_user_id'] )
+    query3 = db.session.query(User).filter(User.user_id ==query[0].request_user_id )
     tempDecode = query3[0].token
     payload['tokens'] = tempDecode.encode('ascii','ignore')
     print payload['tokens']
@@ -253,7 +253,7 @@ def transport_acceptRequest():
         "message": "Rider will be there shortly to pick up food!"
     }
     }
-    query3 = db.session.query(Share).filter(Share.share_id ==temp['share_id'] )
+    query3 = db.session.query(Share).filter(Share.share_id ==query[0].share_id )
     query4 = db.session.query(User).filter(User.user_id ==query3[0].user_id )
     tempDecode = query4[0].token
     payload['tokens'] = tempDecode.encode('ascii','ignore')
