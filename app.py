@@ -230,12 +230,12 @@ def transport_acceptRequest():
     }
     
 
-    headers = {
-    'content-type': "application/json",
-    'authorization': "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIyYWI3NTNhNi1mYmYxLTQ4ZDYtOWEzZC1lZGIzMGI4NGQ2ZTMifQ.nRO6XwHOod2mGKHHtO-H13qHdrJQLWxxSurE17fLofI",
-    'cache-control': "no-cache",
-    'postman-token': "7e8e9e73-9ff6-69e5-ff68-4c0b94e26c12"
-    }
+    # headers = {
+    # 'content-type': "application/json",
+    # 'authorization': "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIyYWI3NTNhNi1mYmYxLTQ4ZDYtOWEzZC1lZGIzMGI4NGQ2ZTMifQ.nRO6XwHOod2mGKHHtO-H13qHdrJQLWxxSurE17fLofI",
+    # 'cache-control': "no-cache",
+    # 'postman-token': "7e8e9e73-9ff6-69e5-ff68-4c0b94e26c12"
+    # }
     
 
     query3 = db.session.query(User).filter(User.user_id ==temp['request_user_id'] )
@@ -250,7 +250,7 @@ def transport_acceptRequest():
     tempDecode = query4[0].token
     payload['tokens'][0] = tempDecode.encode('ascii','ignore')
     print payload['tokens']
-    response = requests.request("POST", url, data=payload, headers=headers)
+    response = requests.request("POST", url, data=payload) # headers=headers)
     print "RESPONSE",
     print response
     # query2 = db.session.query(Share).filter(Share.share_id == temp['share_id'])
