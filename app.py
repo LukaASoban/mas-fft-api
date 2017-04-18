@@ -116,7 +116,7 @@ def share():
 
     # return json.dumps(share.to_json())
 
-    return ''
+    return 'Success'
 
 # Get all active shares for a user
 @app.route('/shares_user/<userid>')
