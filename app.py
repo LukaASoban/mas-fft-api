@@ -86,6 +86,7 @@ def user(userid):
     return error_msg('No user found')
 
 
+
 ## SHARE ##
 
 # Post a share request
@@ -311,6 +312,21 @@ def request_postRequest():
 #     request.json = json.loads(request.data)
 #     request_object = Request()
 
+
+# Get detailed transport information for a transport request
+@app.route('/transport/<id>', methods=['GET'])
+def getTransportDetails(id):
+    query = db.session.query(transportRequests).filter(transportRequests.transport_id == id).first()
+    res = query.column_items
+    query1 = db.session.query(Share).filter(Share.share_id == res[constants.c_share_id]).first()
+    share_user_id = query1.user_id
+    query2 =  db.session.query(User).filter(User.user_id == share_user_id).first().column_items
+    query3 = db.session.query(User).filter(User.user_id == res["request_user_id"]).first().column_items
+    res["share_user"] = query2["first_name"]+" "+query2["last_name"]
+    res["share_contact"] = query2["phone_number"]
+    res["request_user"] = query3["first_name"] + " " + query3["last_name"]
+    res["request_contact"] = query3["phone_number"]
+    return json.dumps(res)
 
 
 def error_msg(param):
