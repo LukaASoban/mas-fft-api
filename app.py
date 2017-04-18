@@ -253,7 +253,7 @@ def transport_acceptRequest():
         "message": "Rider will be there shortly to pick up food!"
     }
     }
-    query3 = db.session.query(Share).filter(Share.share_id ==query[0].share_id )
+    query3 = db.session.query(Share).filter(Share.share_id ==query[0].share_id)
     query4 = db.session.query(User).filter(User.user_id ==query3[0].user_id )
     tempDecode = query4[0].token
     payload['tokens'] = tempDecode.encode('ascii','ignore')
@@ -324,6 +324,7 @@ def request_postRequest():
 @app.route('/transport/<id>', methods=['GET'])
 def getTransportDetails(id):
     query = db.session.query(transportRequests).filter(transportRequests.transport_id == id).first()
+    query4 = db.session.query(User).filter(User.user_id==query.transport_user_id).first()
     res = query.column_items
     query1 = db.session.query(Share).filter(Share.share_id == res[constants.c_share_id]).first()
     share_user_id = query1.user_id
@@ -333,6 +334,9 @@ def getTransportDetails(id):
     res["share_user_contact"] = query2["phone_number"]
     res["request_user_name"] = query3["first_name"] + " " + query3["last_name"]
     res["request_user_contact"] = query3["phone_number"]
+    res["requester_pic"] = query3["profile_pic_url"]
+    res["sharer_pic"] = query2["profile_pic_url"]
+    res["transporter_pic"] = query4["profile_pic_url"]
     return json.dumps(res)
 
 
